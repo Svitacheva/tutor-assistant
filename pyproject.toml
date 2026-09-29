@@ -1,0 +1,37 @@
+[project]
+name = "tutor-assistant"
+version = "0.1.0"
+description = "AI-помощник тьютора: извлечение, классификация и зонирование наблюдений"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.5", "python-dateutil>=2.8"]
+
+[project.optional-dependencies]
+llm = ["gigachat>=0.2"]
+dev = ["pytest>=7.4", "pytest-cov>=4.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
+pythonpath = ["."]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "src/__init__.py",
+    "src/llm_client.py", # требует API-ключ, не тестируется
+]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+mypy_path = "."
+explicit_package_bases = true
+namespace_packages = true
